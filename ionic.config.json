@@ -1,0 +1,7 @@
+{
+  "name": "KomaniyaExpress",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

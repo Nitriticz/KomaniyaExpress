@@ -1,0 +1,14 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1>Listado de Repartidores</h1>
+  <ion-card *ngFor="let r of repartidores">
+    <ion-card-header>
+      <ion-card-subtitle>Fecha de Ingreso: {{r.fechaIngreso.toLocaleDateString('es-es', {year:"numeric", month:"long",
+        day:"numeric"})}}</ion-card-subtitle>
+      <ion-card-title>{{r.nombre}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      Entregas a cargo actualmente: 2
+    </ion-card-content>
+  </ion-card>
+</ion-content>

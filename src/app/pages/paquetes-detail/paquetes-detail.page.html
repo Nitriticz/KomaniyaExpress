@@ -1,0 +1,41 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1>Detalles del Pedido</h1>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle color="{{paquete.entregado ? 'success' : 'danger'}}">
+        {{paquete.entregado && paquete.fechaEntrega ? 'Entregado el ' + paquete.fechaEntrega.toLocaleDateString('es-es',
+        {year:"numeric", month:"long",
+        day:"numeric"}) : 'No entregado'}}
+      </ion-card-subtitle>
+      <ion-card-subtitle>
+        {{paquete.repartidor ? '' : 'Sin Repartidor Asignado'}}
+      </ion-card-subtitle>
+      <ion-card-subtitle>
+        Solicitado el {{paquete.fechaSolicitud.toLocaleDateString('es-es', {year:"numeric", month:"long",
+        day:"numeric"})}}
+      </ion-card-subtitle>
+      <ion-card-title>{{paquete.etiqueta}}</ion-card-title>
+      <ion-card-subtitle>Paquete #{{'0'.repeat(4 - paquete.id.toString().length) + paquete.id}}</ion-card-subtitle>
+    </ion-card-header>
+
+    <ion-card-content>
+      {{paquete.descripcion}}
+    </ion-card-content>
+
+  </ion-card>
+
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="!paquete.entregado && !paquete.repartidor">
+    <ion-fab-button>
+      <ion-icon name="caret-up"></ion-icon>
+    </ion-fab-button>
+    <ion-fab-list side="top">
+      <ion-fab-button *ngIf="!paquete.repartidor" (click)="asignRepartidor()">
+        <ion-icon name="person-add"></ion-icon>
+      </ion-fab-button>
+      <ion-fab-button *ngIf="!paquete.entregado && paquete.repartidor" (click)="checkDelivered()">
+        <ion-icon name="checkmark-circle"></ion-icon>
+      </ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+</ion-content>

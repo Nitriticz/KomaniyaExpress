@@ -1,7 +1,19 @@
 <ion-content [fullscreen]="true" class="ion-padding">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end">
+    <ion-fab-button [routerLink]="['/new-paquete']">
+      <ion-icon name="add"></ion-icon>
+    </ion-fab-button>
+  </ion-fab>
   <h1>Listado de Paquetes</h1>
-  <p class="info">Presione el pedido para ver los detalles</p>
-  <ion-card *ngFor="let p of paquetes" [routerLink]="['/paquetes',p.id]">
+  <ion-searchbar (ionInput)="handleInput($event)" placeholder="Buscar por etiqueta o ID"
+    class="searchbar"></ion-searchbar>
+  <div class="checkBox-container">
+    <ion-checkbox labelPlacement="end" (ionChange)="checkboxClick($event)" checked="true" #all>Todo</ion-checkbox>
+    <ion-checkbox labelPlacement="end" (ionChange)="checkboxClick($event)" #delivered>Entregados</ion-checkbox>
+    <ion-checkbox labelPlacement="end" (ionChange)="checkboxClick($event)" #undelivered>Por Entregar</ion-checkbox>
+  </div>
+  <p class="info">Presione el paquete para ver sus detalles</p>
+  <ion-card *ngFor="let p of results" [routerLink]="['/paquetes',p.id]">
     <ion-card-header>
       <ion-card-subtitle color="{{(p.entregado) ? 'success' : 'danger'}}">
         {{(p.entregado) ? 'Entregado' : 'No entregado'}}

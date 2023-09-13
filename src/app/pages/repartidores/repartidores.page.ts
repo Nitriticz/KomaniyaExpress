@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Repartidor } from 'src/app/models/repartidor.model';
-import { repartidorService } from 'src/app/services/repartidor-service.service';
+import { RepartidorService } from 'src/app/services/repartidor-service.service';
+import { PaqueteService } from 'src/app/services/paquete-service.service';
 
 @Component({
   selector: 'app-repartidores',
@@ -9,11 +10,21 @@ import { repartidorService } from 'src/app/services/repartidor-service.service';
 })
 export class RepartidoresPage implements OnInit {
 
-  repartidores!: Repartidor[]
+  constructor(private repartidorService: RepartidorService, private paqueteService: PaqueteService) { }
 
-  constructor(private repartidorService: repartidorService) { }
+  repartidores: Repartidor[] = this.repartidorService.getRepartidores()
 
   ngOnInit() {
-    this.repartidores = this.repartidorService.getRepartidores();
   }
+
+  results = [...this.repartidores]
+  handleInput(event: any) {
+    const query = event.target.value.toLowerCase();
+    this.results = this.repartidores.filter((r) => r.nombre.toLowerCase().indexOf(query) > -1);
+  }
+
+  getCantPends(id: string): number {
+    return this.paqueteService.getCantPends(id)
+  }
+
 }

@@ -27,7 +27,21 @@ const routes: Routes = [
   },
   {
     path: 'repartidores',
-    loadChildren: () => import('./pages/repartidores/repartidores.module').then( m => m.RepartidoresPageModule)
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/repartidores/repartidores.module').then( m => m.RepartidoresPageModule)
+      },
+      {
+        path: ':idRepartidor',
+        loadChildren: () => import('./pages/repartidores-detail/repartidores-detail.module').then( m => m.RepartidoresDetailPageModule)
+      }
+    ]
+    
+  },
+  {
+    path: 'new-paquete',
+    loadChildren: () => import('./pages/new-paquete/new-paquete.module').then( m => m.NewPaquetePageModule)
   },
 ];
 

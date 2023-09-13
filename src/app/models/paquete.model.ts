@@ -7,5 +7,6 @@ export interface Paquete {
     fechaSolicitud: Date,
     entregado: boolean,
     fechaEntrega?: Date,
-    repartidor?: Repartidor
+    repartidor?: Repartidor,
+    direccion: string
 }

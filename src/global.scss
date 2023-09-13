@@ -25,7 +25,7 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Satisfy&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins&family=Comfortaa&display=swap');
 
 :root {
     --primary: #E8B76C;
@@ -35,7 +35,7 @@
     --dark: #402E32;
 }
 ion-content {
-    --background: var(--neutral);
+    --background: linear-gradient(20deg, #402E32 0%, #A88C66 15%, #DFE0DF 50%, #FFF8EC 90%, #E8B76C 100%) center;
     --color: var(--dark);
 }
 * {
@@ -43,19 +43,21 @@ ion-content {
 }
 h1 {
     margin-top: 3rem;
-    font-family: 'Satisfy', cursive;
+    font-family: 'Comfortaa', cursive;
     font-size: 2rem;
-    font-weight: bold;
+    font-weight: bolder;
 }
 ion-card {
     --background: var(--shade);
     --color: var(--dark);
     margin: 1rem 0 0 0;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 }
 ion-card-header {
     padding-bottom: 0.5rem;
 }
 ion-card-title {
+    font-family: 'Comfortaa', cursive;
     --color: var(--primary);
 }
 ion-card-subtitle {
@@ -72,4 +74,60 @@ ion-card-content {
 ion-fab-button {
     --background: var(--secondary);
     --background-activated: var(--secondary)
+}
+ion-chip {
+    --background: var(--secondary);
+    text-transform: capitalize;
+}
+ion-item {
+    --background: var(--shade);
+    --color: var(--dark);
+}
+ion-item ion-label p {
+    color: var(--dark) !important;
+}
+.searchbar {
+    --background: var(--shade);
+    --color: var(--dark);
+}
+.list-md {
+    padding: 0 !important;
+    background: none !important;
+}
+.checkBox-container {
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+ion-checkbox {
+    --checkbox-background: var(--shade);
+    --checkbox-background-checked: var(--secondary);
+    --border-color-checked: var(--secondary);
+}
+.imgContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.profilePic {
+    border-radius: 50%;
+    max-height: 12rem;
+    border: solid var(--primary) 0.3rem;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+ion-input {
+    --color: var(--dark) !important;
+    --background: var(--shade) !important;
+    --highlight-color-focused: var(--secondary) !important;
+}
+.list-ios {
+    background: none !important;
+}
+ion-button {
+    --background: var(--secondary);
+    --background-activated: var(--primary);
+    --background-focused: var(--primary);
+    --background-hover: var(--primary);
+    margin-top: 2rem;
 }

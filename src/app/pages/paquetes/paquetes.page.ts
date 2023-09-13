@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Paquete } from 'src/app/models/paquete.model';
 import { PaqueteService } from 'src/app/services/paquete-service.service';
 
@@ -8,13 +8,48 @@ import { PaqueteService } from 'src/app/services/paquete-service.service';
   styleUrls: ['./paquetes.page.scss'],
 })
 export class PaquetesPage implements OnInit {
-
-  paquetes: Paquete[] = []
+  @ViewChild('all') private checkboxAll!: any;
+  @ViewChild('delivered') private checkboxDelivered!: any;
+  @ViewChild('undelivered') private checkboxUndelivered!: any;
 
   constructor(private paqueteService: PaqueteService) { }
 
+  paquetes: Paquete[] = this.paqueteService.getPaquetes()
+
   ngOnInit() {
-    this.paquetes = this.paqueteService.getPaquetes()
   }
 
+  ngDoCheck() {
+    if (this.paquetes.length !== this.paqueteService.getPaquetes().length) {
+      this.paquetes = this.paqueteService.getPaquetes()
+      this.results = [...this.paquetes]
+    }
+  }
+
+  results = [...this.paquetes]
+  handleInput(event: any) {
+    const query = event.target.value.toLowerCase();
+    this.results = this.paquetes.filter((p) => p.etiqueta.toLowerCase().indexOf(query) > -1 || p.id.toLowerCase().indexOf(query) > -1)
+  }
+
+  checkboxClick(event: any) {
+    switch (event.target.name) {
+      case 'ion-cb-0':
+        this.checkboxDelivered.checked = false
+        this.checkboxUndelivered.checked = false
+        this.results = [...this.paquetes]
+        break;
+      case 'ion-cb-1':
+        this.checkboxAll.checked = false
+        this.checkboxUndelivered.checked = false
+        this.results = this.paquetes.filter((p) => p.entregado)
+        break;
+      case 'ion-cb-2':
+        this.checkboxAll.checked = false
+        this.checkboxDelivered.checked = false
+        this.results = this.paquetes.filter((p) => !p.entregado)
+        break;
+    }
+    
+  }
 }

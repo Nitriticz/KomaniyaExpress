@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Paquete } from 'src/app/models/paquete.model';
+import { Repartidor } from 'src/app/models/repartidor.model';
 import { PaqueteService } from 'src/app/services/paquete-service.service';
+import { RepartidorService } from 'src/app/services/repartidor-service.service';
 
 @Component({
   selector: 'app-paquetes-detail',
@@ -10,9 +12,10 @@ import { PaqueteService } from 'src/app/services/paquete-service.service';
 })
 export class PaquetesDetailPage implements OnInit {
 
-  paquete!: Paquete
+  constructor(private paqueteService: PaqueteService, private repartidorService: RepartidorService, private activatedRoute: ActivatedRoute, private router: Router) { }
 
-  constructor(private paqueteService: PaqueteService, private activatedRoute: ActivatedRoute, private router: Router) { }
+  paquete!: Paquete
+  repartidores: Repartidor[] = this.repartidorService.getRepartidores();
 
   ngOnInit() {
     this.activatedRoute.paramMap.subscribe(params => {
@@ -25,12 +28,28 @@ export class PaquetesDetailPage implements OnInit {
     })
   }
 
-  asignRepartidor() {
+  public results = [...this.repartidores];
+  handleInput(event: any) {
+    const query = event.target.value.toLowerCase();
+    this.results = this.repartidores.filter((d) => d.nombre.toLowerCase().indexOf(query) > -1);
+  }
 
+  asignRepartidor(repartidor: Repartidor,id: string) {
+    this.paqueteService.asignRepartidor(repartidor, id)
+    this.refresh()
   }
 
   checkDelivered() {
     this.paqueteService.checkDelivery(this.paquete.id)
+    this.refresh()
+  }
+
+  getCantPends(id: string): number {
+    return this.paqueteService.getCantPends(id)
+  }
+
+  refresh() {
+    this.paquete = this.paqueteService.getPaquete(this.paquete.id)
   }
 
 }

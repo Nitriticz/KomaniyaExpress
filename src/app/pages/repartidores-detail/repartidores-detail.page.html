@@ -1,0 +1,57 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1>Detalles del Repartidor</h1>
+  <div class="imgContainer">
+    <img src={{repartidor.image}} alt="{{repartidor.nombre}}'s Profile Picture" class="profilePic">
+  </div>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-subtitle>Fecha de Ingreso: {{repartidor.fechaIngreso.toLocaleDateString('es-es', {year:"numeric",
+        month:"long",
+        day:"numeric"})}}</ion-card-subtitle>
+      <ion-card-title>{{repartidor.nombre}}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>
+          <ion-label>Paquetes a cargo actualmente</ion-label>
+        </ion-list-header>
+        <ion-item lines="none" *ngIf="pendientes.length === 0; else paquetesPendientes">
+          <ion-label>
+            Sin paquetes a cargo
+          </ion-label>
+        </ion-item>
+        <ng-template #paquetesPendientes>
+          <ion-item lines="none" *ngFor="let p of pendientes" [routerLink]="['/paquetes',p.id]">
+            <ion-label>
+              {{p.etiqueta}}
+            </ion-label>
+          </ion-item>
+        </ng-template>
+      </ion-list>
+      <p *ngIf="pendientes.length > 0">
+        {{getCantPends(repartidor.id)}} paquetes en total
+      </p>
+      <ion-list class="scndList">
+        <ion-list-header>
+          <ion-label>Historial de paquetes entregados</ion-label>
+        </ion-list-header>
+        <ion-item lines="none" *ngIf="entregados.length === 0; else paquetesEntregados">
+          <ion-label>
+            Sin paquetes entregados
+          </ion-label>
+        </ion-item>
+        <ng-template #paquetesEntregados>
+          <ion-item lines="none" *ngFor="let p of entregados" [routerLink]="['/paquetes',p.id]">
+            <ion-label>
+              {{p.etiqueta}}
+            </ion-label>
+          </ion-item>
+        </ng-template>
+      </ion-list>
+      <p *ngIf="entregados.length > 0">
+        {{getCantDelivs(repartidor.id)}} paquetes en total
+      </p>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

@@ -1,0 +1,57 @@
+<ion-content [fullscreen]="true" class="ion-padding">
+  <h1>Nuevo Paquete</h1>
+  <ion-card>
+    <ion-card-content>
+      <form [formGroup]="pedidoForm" (ngSubmit)='addPaquete()'>
+        <ion-list>
+          <ion-item lines="none">
+            <ion-input label="Etiqueta" label-placement="floating" fill="solid"
+              placeholder="Ingrese Etiqueta del paquete" formControlName="etiqueta"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input label="Descripción" label-placement="floating" fill="solid"
+              placeholder="Ingrese descripción del paquete" formControlName="descripcion"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input label="Dirección" label-placement="floating" fill="solid"
+              placeholder="Ingrese dirección de destino" formControlName="direccion"></ion-input>
+          </ion-item>
+          <ion-item lines="none">
+            <ion-input label="Repartidor (opcional)" label-placement="floating" fill="solid" [(ngModel)]="repartidor"
+              placeholder="Seleccione repartidor" formControlName="repartidor" readonly=""
+              id="open-repartidores"></ion-input>
+          </ion-item>
+        </ion-list>
+        <ion-button expand="block" shape="round" type="submit" [disabled]="!pedidoForm.valid">
+          Guardar Orden
+        </ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+  <ion-alert [isOpen]="isAlertOpen" header="Información" subHeader="Paquete guardado éxitosamente"
+    message="Seleccione si quiere volver a la lista de paquetes o seguir creando paquetes." [buttons]="alertButtons"
+    (didDismiss)="setOpen(false)"></ion-alert>
+
+  <ion-modal #modal trigger="open-repartidores" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content>
+        <ion-searchbar placeholder="Buscar repartidor" (click)="modal.setCurrentBreakpoint(0.75)"
+          (ionInput)="handleInput($event)" class="searchbar"></ion-searchbar>
+        <ion-list>
+          <ion-item *ngFor="let r of results" (click)="asignRepartidor(r.id)" lines="full">
+            <ion-avatar slot="start">
+              <ion-img src={{r.image}}></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{r.nombre}}</h2>
+              <p color="primary">
+                {{getCantPends(r.id) === 0 ? 'Sin paquetes asignados'
+                : getCantPends(r.id) + ' paquetes asignados actualmente'}}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

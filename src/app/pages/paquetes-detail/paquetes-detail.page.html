@@ -1,15 +1,30 @@
 <ion-content [fullscreen]="true" class="ion-padding">
-  <h1>Detalles del Pedido</h1>
+  <h1>Detalles del Paquete</h1>
   <ion-card>
     <ion-card-header>
+      <ion-card-subtitle>
+        Destino: {{paquete.direccion}}
+      </ion-card-subtitle>
       <ion-card-subtitle color="{{paquete.entregado ? 'success' : 'danger'}}">
         {{paquete.entregado && paquete.fechaEntrega ? 'Entregado el ' + paquete.fechaEntrega.toLocaleDateString('es-es',
         {year:"numeric", month:"long",
         day:"numeric"}) : 'No entregado'}}
       </ion-card-subtitle>
-      <ion-card-subtitle>
-        {{paquete.repartidor ? '' : 'Sin Repartidor Asignado'}}
+      <ion-card-subtitle *ngIf="!paquete.repartidor; else repartidorAsignado">
+        Sin Repartidor Asignado
       </ion-card-subtitle>
+      <ng-template #repartidorAsignado>
+        <ion-card-subtitle>
+          Repartidor:
+          <ion-chip [routerLink]="['/repartidores',paquete.repartidor?.id]">
+            <ion-avatar>
+              <img alt={{paquete.repartidor?.nombre}} src={{paquete.repartidor?.image}} />
+            </ion-avatar>
+            <ion-label>{{paquete.repartidor?.nombre}}</ion-label>
+          </ion-chip>
+        </ion-card-subtitle>
+      </ng-template>
+
       <ion-card-subtitle>
         Solicitado el {{paquete.fechaSolicitud.toLocaleDateString('es-es', {year:"numeric", month:"long",
         day:"numeric"})}}
@@ -24,12 +39,12 @@
 
   </ion-card>
 
-  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="!paquete.entregado && !paquete.repartidor">
+  <ion-fab slot="fixed" vertical="bottom" horizontal="end" *ngIf="!paquete.entregado || !paquete.repartidor">
     <ion-fab-button>
       <ion-icon name="caret-up"></ion-icon>
     </ion-fab-button>
     <ion-fab-list side="top">
-      <ion-fab-button *ngIf="!paquete.repartidor" (click)="asignRepartidor()">
+      <ion-fab-button id="open-modal">
         <ion-icon name="person-add"></ion-icon>
       </ion-fab-button>
       <ion-fab-button *ngIf="!paquete.entregado && paquete.repartidor" (click)="checkDelivered()">
@@ -37,5 +52,28 @@
       </ion-fab-button>
     </ion-fab-list>
   </ion-fab>
+
+  <ion-modal #modal trigger="open-modal" [initialBreakpoint]="0.5" [breakpoints]="[0, 0.25, 0.5, 0.75]">
+    <ng-template>
+      <ion-content>
+        <ion-searchbar placeholder="Buscar repartidor" (click)="modal.setCurrentBreakpoint(0.75)"
+          (ionInput)="handleInput($event)" class="searchbar"></ion-searchbar>
+        <ion-list>
+          <ion-item *ngFor="let r of results" (click)="asignRepartidor(r, paquete.id)" lines="full">
+            <ion-avatar slot="start">
+              <ion-img src={{r.image}}></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <h2>{{r.nombre}}</h2>
+              <p color="primary">
+                {{getCantPends(r.id) === 0 ? 'Sin paquetes asignados'
+                : getCantPends(r.id) + ' paquetes asignados actualmente'}}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
 
 </ion-content>

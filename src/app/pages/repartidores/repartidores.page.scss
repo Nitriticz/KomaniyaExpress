@@ -1,0 +1,22 @@
+.searchbar {
+    padding: 0;
+}
+h1 {
+    margin-bottom: 0;
+}
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-image: linear-gradient(90deg, #E8B76C, #DFE0DF, #DFE0DF, #DFE0DF);
+}
+.profilePic {
+    max-width: 90%;
+}
+.imgContainer {
+    width: 30%;
+}
+.cardContainer {
+    width: 70%;
+}

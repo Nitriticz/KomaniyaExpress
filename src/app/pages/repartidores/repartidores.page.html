@@ -1,14 +1,25 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <h1>Listado de Repartidores</h1>
-  <ion-card *ngFor="let r of repartidores">
-    <ion-card-header>
-      <ion-card-subtitle>Fecha de Ingreso: {{r.fechaIngreso.toLocaleDateString('es-es', {year:"numeric", month:"long",
-        day:"numeric"})}}</ion-card-subtitle>
-      <ion-card-title>{{r.nombre}}</ion-card-title>
-    </ion-card-header>
+  <ion-searchbar (ionInput)="handleInput($event)" placeholder="Buscar por nombre" class="searchbar"></ion-searchbar>
+  <p class="info">Presione el repartidor para ver sus detalles</p>
+  <ion-card *ngFor="let r of results" [routerLink]="['/repartidores',r.id]">
+    <div class="container">
+      <div class="imgContainer">
+        <img src={{r.image}} alt="{{r.nombre}}'s Profile Picture" class="profilePic">
+      </div>
+      <div class="cardContainer">
+        <ion-card-header>
+          <ion-card-subtitle>Fecha de Ingreso: {{r.fechaIngreso.toLocaleDateString('es-es', {year:"numeric",
+            month:"long",
+            day:"numeric"})}}</ion-card-subtitle>
+          <ion-card-title>{{r.nombre}}</ion-card-title>
+        </ion-card-header>
 
-    <ion-card-content>
-      Entregas a cargo actualmente: 2
-    </ion-card-content>
+        <ion-card-content>
+          Paquetes a cargo: {{getCantPends(r.id)}}
+        </ion-card-content>
+      </div>
+    </div>
+
   </ion-card>
 </ion-content>

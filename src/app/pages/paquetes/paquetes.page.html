@@ -19,7 +19,7 @@
         {{(p.entregado) ? 'Entregado' : 'No entregado'}}
       </ion-card-subtitle>
       <ion-card-title>{{p.etiqueta}}</ion-card-title>
-      <ion-card-subtitle>Paquete #{{'0'.repeat(4 - p.id.toString().length) + p.id}}</ion-card-subtitle>
+      <ion-card-subtitle>Paquete #{{p.id}}</ion-card-subtitle>
     </ion-card-header>
 
     <ion-card-content>

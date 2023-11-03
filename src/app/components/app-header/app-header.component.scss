@@ -5,3 +5,44 @@ img {
     max-height: 2.8rem;
     padding-top: 0.5rem;
 }
+ion-menu-button {
+  --color: var(--primary);
+}
+ion-menu::part(backdrop) {
+  background-color: black;
+}
+
+ion-menu::part(container) {
+  border-radius: 20px 0 0 20px;
+  box-shadow: 4px 0px 16px black;
+}
+
+ion-menu>ion-header>ion-toolbar {
+  --background: var(--primary);
+}
+ion-menu>ion-content {
+  --background: var(--shade);
+}
+ion-menu>ion-content>ion-list {
+  margin: 0;
+  padding: 0;
+}
+ion-button {
+  margin: 0;
+  padding: 0;
+  --background: transparent;
+  --background-hover: transparent;
+  --box-shadow: none;
+  font-size: medium;
+  --color: var(--dark);
+}
+.closeSession {
+  --color: red;
+}
+ion-icon {
+  margin-right: 0.5rem;
+}
+.profile-container {
+  width: 100%;
+  padding: 0.2rem;
+}

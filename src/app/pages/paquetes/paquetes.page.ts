@@ -12,44 +12,55 @@ export class PaquetesPage implements OnInit {
   @ViewChild('delivered') private checkboxDelivered!: any;
   @ViewChild('undelivered') private checkboxUndelivered!: any;
 
-  constructor(private paqueteService: PaqueteService) { }
+  constructor(private paqueteService: PaqueteService) {}
 
-  paquetes: Paquete[] = this.paqueteService.getPaquetes()
+  paquetes: Paquete[] = [];
+  results = [...this.paquetes];
 
   ngOnInit() {
+    this.setPaquetes();
   }
 
   ngDoCheck() {
-    if (this.paquetes.length !== this.paqueteService.getPaquetes().length) {
-      this.paquetes = this.paqueteService.getPaquetes()
-      this.results = [...this.paquetes]
+    if (
+      this.paquetes.length !== this.paqueteService.getPaquetesArray().length
+    ) {
+      this.paquetes = this.paqueteService.getPaquetesArray();
+      this.results = [...this.paquetes];
     }
   }
 
-  results = [...this.paquetes]
+  async setPaquetes() {
+    this.paquetes = await this.paqueteService.getPaquetes();
+    this.results = [...this.paquetes];
+  }
+
   handleInput(event: any) {
     const query = event.target.value.toLowerCase();
-    this.results = this.paquetes.filter((p) => p.etiqueta.toLowerCase().indexOf(query) > -1 || p.id.toLowerCase().indexOf(query) > -1)
+    this.results = this.paquetes.filter(
+      (p) =>
+        p.etiqueta.toLowerCase().indexOf(query) > -1 ||
+        p.id.toLowerCase().indexOf(query) > -1
+    );
   }
 
   checkboxClick(event: any) {
     switch (event.target.name) {
       case 'ion-cb-0':
-        this.checkboxDelivered.checked = false
-        this.checkboxUndelivered.checked = false
-        this.results = [...this.paquetes]
+        this.checkboxDelivered.checked = false;
+        this.checkboxUndelivered.checked = false;
+        this.results = [...this.paquetes];
         break;
       case 'ion-cb-1':
-        this.checkboxAll.checked = false
-        this.checkboxUndelivered.checked = false
-        this.results = this.paquetes.filter((p) => p.entregado)
+        this.checkboxAll.checked = false;
+        this.checkboxUndelivered.checked = false;
+        this.results = this.paquetes.filter((p) => p.entregado);
         break;
       case 'ion-cb-2':
-        this.checkboxAll.checked = false
-        this.checkboxDelivered.checked = false
-        this.results = this.paquetes.filter((p) => !p.entregado)
+        this.checkboxAll.checked = false;
+        this.checkboxDelivered.checked = false;
+        this.results = this.paquetes.filter((p) => !p.entregado);
         break;
     }
-    
   }
 }

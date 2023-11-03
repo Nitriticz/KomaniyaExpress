@@ -11,45 +11,50 @@ import { RepartidorService } from 'src/app/services/repartidor-service.service';
   styleUrls: ['./paquetes-detail.page.scss'],
 })
 export class PaquetesDetailPage implements OnInit {
+  constructor(
+    private paqueteService: PaqueteService,
+    private repartidorService: RepartidorService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {}
 
-  constructor(private paqueteService: PaqueteService, private repartidorService: RepartidorService, private activatedRoute: ActivatedRoute, private router: Router) { }
-
-  paquete!: Paquete
+  paquete!: Paquete;
   repartidores: Repartidor[] = this.repartidorService.getRepartidores();
 
   ngOnInit() {
-    this.activatedRoute.paramMap.subscribe(params => {
-      const id:unknown = params.get('idPaquete')
+    this.activatedRoute.paramMap.subscribe((params) => {
+      const id: unknown = params.get('idPaquete');
       if (id !== null) {
-        this.paquete = this.paqueteService.getPaquete(id as string)
+        this.paquete = this.paqueteService.getPaquete(id as string);
       } else {
-        this.router.navigate(['/home'])
+        this.router.navigate(['/home']);
       }
-    })
+    });
   }
 
   public results = [...this.repartidores];
   handleInput(event: any) {
     const query = event.target.value.toLowerCase();
-    this.results = this.repartidores.filter((d) => d.nombre.toLowerCase().indexOf(query) > -1);
+    this.results = this.repartidores.filter(
+      (d) => d.nombre.toLowerCase().indexOf(query) > -1
+    );
   }
 
-  asignRepartidor(repartidor: Repartidor,id: string) {
-    this.paqueteService.asignRepartidor(repartidor, id)
-    this.refresh()
+  asignRepartidor(repartidor: Repartidor, id: string) {
+    this.paqueteService.asignRepartidor(repartidor, id);
+    this.refresh();
   }
 
   checkDelivered() {
-    this.paqueteService.checkDelivery(this.paquete.id)
-    this.refresh()
+    this.paqueteService.checkDelivery(this.paquete.id);
+    this.refresh();
   }
 
   getCantPends(id: string): number {
-    return this.paqueteService.getCantPends(id)
+    return this.paqueteService.getCantPends(id);
   }
 
   refresh() {
-    this.paquete = this.paqueteService.getPaquete(this.paquete.id)
+    this.paquete = this.paqueteService.getPaquete(this.paquete.id);
   }
-
 }

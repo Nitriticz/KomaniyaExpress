@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "komaniya-express"
+  },
+  "targets": {
+    "komaniya-express": {
+      "hosting": {
+        "app": [
+          "komaniya-express"
+        ]
+      }
+    }
+  }
+}

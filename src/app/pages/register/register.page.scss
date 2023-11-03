@@ -1,0 +1,73 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
+  padding: 0;
+  margin: 0;
+}
+ion-card {
+  width: 100%;
+  margin: 0;
+}
+ion-card-title {
+  text-align: center;
+}
+ion-button {
+  --background: var(--primary);
+}
+.logoContainer {
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+a {
+  margin-left: 0.8rem;
+  color: var(--secondary);
+}
+#open-phone-dialog {
+  width: 100% !important;
+  margin: 0;
+}
+ion-modal#modal {
+  --width: fit-content;
+  --min-width: 250px;
+  --height: fit-content;
+  --border-radius: 6px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#modal ion-icon {
+  margin-right: 6px;
+  width: 48px;
+  height: 48px;
+  padding: 4px 0;
+}
+
+ion-modal#modal .wrapper {
+  margin-bottom: 10px;
+}
+.controls-container {
+  margin: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.controls-container ion-input {
+  margin: 0;
+  height: 3rem;
+  --border-radius: 0.8rem 0 0 0.8rem;
+}
+.controls-container ion-button {
+  margin: 0;
+  height: 3rem;
+  --border-radius: 0 0.8rem 0.8rem 0;
+}

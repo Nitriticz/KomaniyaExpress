@@ -1,0 +1,31 @@
+.container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden !important;
+  padding: 0;
+  margin: 0;
+}
+ion-card {
+  width: 100%;
+  margin: 0;
+}
+ion-card-title {
+  text-align: center;
+}
+ion-button {
+  --background: var(--primary);
+}
+.logoContainer {
+  padding: 0.5rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+a {
+  margin-left: 0.8rem;
+  color: var(--secondary);
+}

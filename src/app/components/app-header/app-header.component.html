@@ -1,7 +1,35 @@
-<ion-header [translucent]="true" class="ion-no-border">
+<ion-menu side="end" contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Mi Perfil</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list [inset]="true" *ngIf="this.profile">
+      <ion-item>
+        <div class="profile-container">
+          <p>Nombre: {{this.profile.name}}</p>
+          <p>Email: {{this.profile.email}}</p>
+          <p>Edad: {{this.profile.age}}</p>
+          <p>Teléfono: {{this.profile.phone}}</p>
+        </div>
+      </ion-item>
+      <ion-item>
+        <ion-button class="closeSession" (click)="logOut()">
+          <ion-icon name="exit-outline"></ion-icon>
+          Cerrar Sesión
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-header [translucent]="true" class="ion-no-border" id="main-content">
   <ion-toolbar>
     <ion-title>
       <img src="../../../assets/img/logo2.png" alt="KonamiyaExpressLogo" (click)="goHome()">
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>

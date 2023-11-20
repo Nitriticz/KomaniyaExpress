@@ -16,8 +16,8 @@ export class HomePage implements OnDestroy {
   userSubscription: Subscription;
   profile!: any;
 
-  ultPaquete: Paquete = this.paqueteService.getUltPaquete();
-  mejRepartidor: Repartidor = this.paqueteService.getMejRepartidor();
+  ultPaquete!: Paquete;
+  mejRepartidor!: Repartidor;
 
   constructor(
     private paqueteService: PaqueteService,
@@ -25,6 +25,10 @@ export class HomePage implements OnDestroy {
   ) {
     this.userSubscription = this.user$.subscribe((aUser: User | null) => {
       aUser?.uid && this.setProfile(aUser.uid);
+    });
+    this.paqueteService.getPaquetes().then(() => {
+      this.ultPaquete = this.paqueteService.getUltPaquete();
+      this.mejRepartidor = this.paqueteService.getMejRepartidor();
     });
   }
 
@@ -46,6 +50,6 @@ export class HomePage implements OnDestroy {
   }
 
   async setProfile(uid: string) {
-    this.profile = (await this.profileService.getProfile(uid)).data();
+    this.profile = await this.profileService.getProfile(uid);
   }
 }

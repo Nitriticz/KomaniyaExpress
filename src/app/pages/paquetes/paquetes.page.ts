@@ -18,7 +18,8 @@ export class PaquetesPage implements OnInit {
   results = [...this.paquetes];
 
   ngOnInit() {
-    this.setPaquetes();
+    this.paquetes = this.paqueteService.getPaquetesArray();
+    this.results = [...this.paquetes];
   }
 
   ngDoCheck() {
@@ -28,11 +29,6 @@ export class PaquetesPage implements OnInit {
       this.paquetes = this.paqueteService.getPaquetesArray();
       this.results = [...this.paquetes];
     }
-  }
-
-  async setPaquetes() {
-    this.paquetes = await this.paqueteService.getPaquetes();
-    this.results = [...this.paquetes];
   }
 
   handleInput(event: any) {

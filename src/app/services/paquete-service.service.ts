@@ -13,6 +13,8 @@ import {
   docSnapshots,
   getDoc,
   getDocs,
+  orderBy,
+  query,
   updateDoc,
 } from '@angular/fire/firestore';
 
@@ -28,7 +30,12 @@ export class PaqueteService {
   ) {}
 
   async getPaquetes(): Promise<Paquete[]> {
-    const snapShot = await getDocs(collection(this.firestore, 'paquetes'));
+    const snapShot = await getDocs(
+      query(
+        collection(this.firestore, 'paquetes'),
+        orderBy('fechaSolicitud', 'desc')
+      )
+    );
     snapShot.forEach((paquete) => {
       this.paquetes.push({
         id: paquete.id,
@@ -85,7 +92,7 @@ export class PaqueteService {
       collection(this.firestore, 'paquetes'),
       newPaquete
     );
-    this.paquetes.push({ id: docRef.id, ...newPaquete } as Paquete);
+    this.paquetes.unshift({ id: docRef.id, ...newPaquete } as Paquete);
   }
 
   checkDelivery(id: string) {
@@ -150,9 +157,7 @@ export class PaqueteService {
 
   getUltPaquete(): Paquete {
     return {
-      ...this.paquetes.find((p) => {
-        return p.id === this.paquetes.length.toString();
-      }),
+      ...this.paquetes[0],
     } as Paquete;
   }
 

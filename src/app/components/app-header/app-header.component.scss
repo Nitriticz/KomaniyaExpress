@@ -28,15 +28,13 @@ ion-menu>ion-content>ion-list {
   padding: 0;
 }
 ion-button {
-  margin: 0;
-  padding: 0;
   --background: transparent;
   --background-hover: transparent;
   --box-shadow: none;
   font-size: medium;
-  --color: var(--dark);
 }
 .closeSession {
+  margin: 0 0 1rem -1rem;
   --color: red;
 }
 ion-icon {
@@ -45,4 +43,21 @@ ion-icon {
 .profile-container {
   width: 100%;
   padding: 0.2rem;
+}
+.editProfile {
+  margin: 0 0 1rem -1rem;
+  --color: var(--primary);
+}
+ion-modal ion-toolbar {
+  --background: var(--primary);
+  --color: white;
+}
+ion-modal ion-toolbar ion-button {
+  --color: white;
+}
+.cancelBtn {
+  --background: #ff6f69;
+}
+.confirmBtn {
+  --background: #84d08e;
 }
